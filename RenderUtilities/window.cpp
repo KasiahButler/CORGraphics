@@ -2,7 +2,7 @@
 #include "window.h"
 #include <cstring>
 
-bool Window::init(int a_width = 800, int a_height = 600, char *a_title = "Generic Window")
+bool Window::init(int a_width, int a_height, char *a_title)
 {
 	width = a_width;
 	height = a_height;

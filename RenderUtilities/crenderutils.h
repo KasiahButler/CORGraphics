@@ -13,3 +13,12 @@ struct Geometry
 Geometry makeGeometry(struct Vertex *verts, size_t vsize, unsigned int *tris, size_t tsize);
 
 void freeGeometry(Geometry &);
+
+struct Shader
+{
+	unsigned handle;
+};
+
+Shader makesShader(const char *vsource, const char *fsource);
+
+void freeShader(Shader &);

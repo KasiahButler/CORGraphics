@@ -1,4 +1,5 @@
 #pragma once
+#include "vertex.h"
 
 struct Geometry
 {
@@ -10,7 +11,7 @@ struct Geometry
 	//Size : Number of Triangles
 };
 
-Geometry makeGeometry(struct Vertex *verts, size_t vsize, unsigned int *tris, size_t tsize);
+Geometry makeGeometry(const Vertex *verts, size_t vsize, const unsigned int *tris, size_t tsize);
 
 void freeGeometry(Geometry &);
 

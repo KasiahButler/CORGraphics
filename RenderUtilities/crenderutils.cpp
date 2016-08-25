@@ -14,9 +14,9 @@ Geometry makeGeometry(const Vertex *verts, size_t vsize, const unsigned int *tri
 
 	
 	//Define all the Variables
-	glCreateBuffers(1, &retVal.vbo);
-	glCreateBuffers(1, &retVal.ibo);
-	glCreateVertexArrays(1, &retVal.vao);
+	glGenBuffers(1, &retVal.vbo);
+	glGenBuffers(1, &retVal.ibo);
+	glGenVertexArrays(1, &retVal.vao);
 
 	//Scope all the variables
 	glBindVertexArray(retVal.vao);

@@ -22,3 +22,5 @@ struct Shader
 Shader makesShader(const char *vsource, const char *fsource);
 
 void freeShader(Shader &);
+
+void draw(const Shader &, const Geometry &);

@@ -5,7 +5,11 @@
 #include "crenderutils.h"
 #include "vertex.h"
 
+#include <fstream>
 #include <cstdio>
+
+#include <string>
+#include <iostream>
 
 Geometry makeGeometry(const Vertex *verts, size_t vsize, const unsigned int *tris, size_t tsize)
 {
@@ -51,7 +55,7 @@ void freeGeometry(Geometry &geo)
 	geo = { 0, 0, 0, 0 };
 }
 
-Shader makesShader(const char * vsource, const char * fsource)
+Shader makeShader(const char * vsource, const char * fsource)
 {
 	Shader retVal;
 
@@ -81,6 +85,42 @@ Shader makesShader(const char * vsource, const char * fsource)
 	return retVal;
 }
 
+char *loadTextFile(const char *fileLocation)
+{
+	std::ifstream myFile(fileLocation, std::ios::in);
+	if (myFile.is_open())
+	{
+		const int fileSize = 1024;
+		char *textString = new char[fileSize];
+		int currentChar = 0;
+
+		while (!myFile.eof() && currentChar < fileSize)
+		{
+			myFile.get(textString[currentChar]);
+			++currentChar;
+		}
+
+		textString[currentChar - 1] = '\0';
+
+		return textString;
+	} 
+
+	return nullptr;
+}
+
+Shader loadShader(const char * vpath, const char * fpath)
+{
+	char *vsource = loadTextFile(vpath);
+	char *fsource = loadTextFile(fpath);
+
+	Shader returnShader = makeShader(vsource, fsource);
+
+	delete[] vsource;
+	delete[] fsource;
+
+	return returnShader;
+}
+
 void freeShader(Shader &shader)
 {
 	glDeleteProgram(shader.handle);
@@ -98,4 +138,45 @@ void draw(const Shader &shader, const Geometry &geometry)
 	//Draw the vertices that are currently bound using array of indices
 	//If IBO is bound, don't need to proved Indicies (NULL in this case)
 	glDrawElements(GL_TRIANGLES, geometry.size, GL_UNSIGNED_INT, NULL);
+}
+
+#define TINYOBJLOADER_IMPLEMENTATION // define this in only *one* .cc
+#include "OBJ\tiny_obj_loader.h"
+#include <random>
+
+Geometry loadOBJ(const char *path)
+{
+	//TinyOBJ required code for setup
+	tinyobj::attrib_t attrib;
+	std::vector<tinyobj::shape_t> shapes;
+	std::vector<tinyobj::material_t> materials;
+	std::string err;
+
+	//Setsup and confirms that an object can be loaded
+	bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &err, path);
+
+	//Builds an array of Verticies and Triangles to work with based on .obj size
+	Vertex   *verts = new Vertex[attrib.vertices.size() / 3];
+	unsigned * tris = new unsigned[shapes[0].mesh.indices.size()];
+
+	//Breaks up the .obj info so that it is in a format we can use
+	for (int i = 0; i < attrib.vertices.size() / 3; ++i)
+	{
+		verts[i] = { attrib.vertices[i * 3],
+			attrib.vertices[i * 3 + 1],
+			attrib.vertices[i * 3 + 2], 1 };
+	}
+
+	for (int i = 0; i < shapes[0].mesh.indices.size(); ++i)
+		tris[i] = shapes[0].mesh.indices[i].vertex_index;
+
+	//Applies the .obj data to our Geometry class so it can be drawn
+	Geometry retval = makeGeometry(verts, attrib.vertices.size() / 3,
+		tris, shapes[0].mesh.indices.size());
+
+	//Clear out data from the .obj
+	delete[] verts;
+	delete[] tris;
+
+	return retval;
 }

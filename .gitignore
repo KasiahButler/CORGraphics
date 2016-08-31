@@ -243,3 +243,20 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+*.meta
+
+
+*.obj
+
+
+!res/**/*.obj
+
+
+*.pch
+
+
+*.pdb
+
+
+*.pgc

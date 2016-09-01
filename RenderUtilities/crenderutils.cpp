@@ -140,6 +140,22 @@ void draw(const Shader &shader, const Geometry &geometry)
 	glDrawElements(GL_TRIANGLES, geometry.size, GL_UNSIGNED_INT, NULL);
 }
 
+void Ndraw(const Shader &s, const Geometry &g, const float M[16], const float V[16], const float P[16])
+{
+	glEnable(GL_CULL_FACE);
+	//glEnable(GL_DEPTH_TEST);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	glUseProgram(s.handle);
+	glBindVertexArray(g.vao);
+
+	glUniformMatrix4fv(0, 1, GL_FALSE, P);
+	glUniformMatrix4fv(1, 1, GL_FALSE, V);
+	glUniformMatrix4fv(2, 1, GL_FALSE, M);
+
+	glDrawElements(GL_TRIANGLES, g.size, GL_UNSIGNED_INT, 0);
+}
+
 #define TINYOBJLOADER_IMPLEMENTATION // define this in only *one* .cc
 #include "OBJ\tiny_obj_loader.h"
 #include <random>

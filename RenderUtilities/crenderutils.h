@@ -31,3 +31,15 @@ void draw(const Shader &, const Geometry &);
 void Ndraw(const Shader &s, const Geometry &g, const float M[16], const float V[16], const float P[16]);
 
 Geometry loadOBJ(const char *path);
+
+struct Texture
+{
+	unsigned handle;
+	unsigned width, height, format;
+};
+
+Texture makeTexture(unsigned width, unsigned height, unsigned format, const unsigned char *pixels);
+Texture makeTextureF(unsigned square, const float *pixels);
+void freeTexture(Texture &t);
+
+void drawPhong(const Shader &s, const Geometry &g, const float M[16], const float V[16], const float P[16]);

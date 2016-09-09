@@ -1,6 +1,5 @@
 #include "crenderutils.h"
 #include "window.h"
-#include "vertex.h"
 #include "gallery.h"
 // This is a branch Test
 

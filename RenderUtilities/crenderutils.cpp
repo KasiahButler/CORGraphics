@@ -34,9 +34,13 @@ Geometry makeGeometry(const Vertex *verts, size_t vsize, const unsigned int *tri
 	//Attributes
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
+	glEnableVertexAttribArray(3);
 
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)16);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)Vertex::POSITION);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)Vertex::COLOR);
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)Vertex::NORMAL);
+	glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)Vertex::TEXCOORD);
 	
 
 	//Unscope the Variables
@@ -171,28 +175,96 @@ Geometry loadOBJ(const char *path)
 	//Setsup and confirms that an object can be loaded
 	bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &err, path);
 
+	int vsize = shapes[0].mesh.indices.size();
+
 	//Builds an array of Verticies and Triangles to work with based on .obj size
-	Vertex   *verts = new Vertex[attrib.vertices.size() / 3];
-	unsigned * tris = new unsigned[shapes[0].mesh.indices.size()];
+	Vertex   *verts = new Vertex[vsize];
+	unsigned *tris = new unsigned[vsize];
 
 	//Breaks up the .obj info so that it is in a format we can use
-	for (int i = 0; i < attrib.vertices.size() / 3; ++i)
+	for (int i = 0; i < vsize; ++i)
 	{
-		verts[i] = { attrib.vertices[i * 3],
-			attrib.vertices[i * 3 + 1],
-			attrib.vertices[i * 3 + 2], 1 };
-	}
+		auto ind = shapes[0].mesh.indices[i];
 
-	for (int i = 0; i < shapes[0].mesh.indices.size(); ++i)
-		tris[i] = shapes[0].mesh.indices[i].vertex_index;
+		const float *n =   &attrib.normals[ind.normal_index * 3];
+		const float *p =  &attrib.vertices[ind.vertex_index * 3];
+
+		verts[i].position = glm::vec4(p[0], p[1], p[2], 1.f);
+		verts[i].normal =   glm::vec4(n[0], n[1], n[2], 0.f);
+
+		if (ind.texcoord_index >= 0)
+		{
+			const float *t = &attrib.texcoords[ind.texcoord_index * 2];
+			verts[i].texcoord = glm::vec2(t[0], t[1]);
+		}
+
+		tris[i] = i;
+	};
 
 	//Applies the .obj data to our Geometry class so it can be drawn
-	Geometry retval = makeGeometry(verts, attrib.vertices.size() / 3,
-		tris, shapes[0].mesh.indices.size());
+	Geometry retval = makeGeometry(verts, vsize, tris, vsize);
 
 	//Clear out data from the .obj
 	delete[] verts;
 	delete[] tris;
 
 	return retval;
+}
+
+Texture makeTexture(unsigned width, unsigned height, unsigned format, const unsigned char *pixels)
+{
+	Texture retval = { 0, width, height, format };
+
+	glGenTextures(1, &retval.handle);
+	glBindTexture(GL_TEXTURE_2D, retval.handle);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, pixels);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	return retval;
+}
+
+Texture makeTextureF(unsigned square, const float *pixels)
+{
+	Texture retval = { 0, square, square, GL_RED };
+
+	glGenTextures(1, &retval.handle);
+	glBindTexture(GL_TEXTURE_2D, retval.handle);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, square, square, 0, GL_RED, GL_FLOAT, pixels);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	return retval;
+}
+
+void freeTexture(Texture &t)
+{
+	glDeleteTextures(1, &t.handle);
+	t = { 0, 0, 0, 0 };
+}
+
+void drawPhong(const Shader &s, const Geometry &g, const float M[16], const float V[16], const float P[16])
+{
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
+	glUseProgram(s.handle);
+	glBindVertexArray(g.vao);
+
+	glUniformMatrix4fv(0, 1, GL_FALSE, P);
+	glUniformMatrix4fv(1, 1, GL_FALSE, V);
+	glUniformMatrix4fv(2, 1, GL_FALSE, M);
+
+	glDrawElements(GL_TRIANGLES, g.size, GL_UNSIGNED_INT, 0);
 }

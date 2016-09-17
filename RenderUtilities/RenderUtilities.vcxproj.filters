@@ -13,39 +13,62 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Unclean">
+      <UniqueIdentifier>{cd09cbfe-5bda-4170-8cf2-3668ce592fba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Unclean">
+      <UniqueIdentifier>{e0ecf81b-630a-474d-b229-51efe8f33dbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{a4e39e6c-4393-4c4f-adca-fb2b4132f880}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="crenderutils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="window.cpp">
+      <Filter>Source Files\Unclean</Filter>
+    </ClCompile>
+    <ClCompile Include="glmake.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gallery.cpp">
+    <ClCompile Include="glload.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="procgen.cpp">
+    <ClCompile Include="gldraw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="crenderutils.h">
+    <ClInclude Include="gldecs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="globjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glmake.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gldraw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="crenderutils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gallery.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="procgen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\shaders\simple.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\simple.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

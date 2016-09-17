@@ -130,18 +130,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="crenderutils.cpp" />
-    <ClCompile Include="gallery.cpp" />
-    <ClCompile Include="procgen.cpp" />
+    <ClCompile Include="gldraw.cpp" />
+    <ClCompile Include="glload.cpp" />
+    <ClCompile Include="glmake.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="crenderutils.h" />
-    <ClInclude Include="gallery.h" />
-    <ClInclude Include="procgen.h" />
-    <ClInclude Include="Timer.h" />
+    <ClInclude Include="gldecs.h" />
+    <ClInclude Include="gldraw.h" />
+    <ClInclude Include="glload.h" />
+    <ClInclude Include="glmake.h" />
+    <ClInclude Include="globjs.h" />
     <ClInclude Include="vertex.h" />
     <ClInclude Include="window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\shaders\simple.frag" />
+    <None Include="..\res\shaders\simple.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,24 +1,38 @@
 #include "crenderutils.h"
-#include "window.h"
-#include "gallery.h"
+#include "GLM\ext.hpp"
+
 // This is a branch Test
 
 int main()
 {
-	Window window;
-	Gallery gallery;
-	window.init();
-	gallery.init();
+	Window context;
+	context.init(1280, 720);
 
-	gallery.loadShader("BASIC", "../res/shaders/simplevert.txt", "../res/shaders/simplefrag.txt");
-	gallery.loadObject("SPHERE", "../res/models/sphere.obj");
+	Framebuffer screen = { 0,1280,720 };
 
-	while (window.step())
+	Geometry quad = makeGeometry(quad_verts, 4,
+		quad_tris, 6);
+
+	Shader simple = loadShader("../res/shaders/simple.vert",
+		"../res/shaders/simple.frag");
+
+	Geometry spear = loadOBJ("../res/models/soulspear.obj");
+
+	Texture spear_normal = loadTexture("../res/textures/soulspear_normal.tga");
+	Texture spear_diffuse = loadTexture("../res/textures/soulspear_diffuse.tga");
+	Texture spear_specular = loadTexture("../res/textures/soulspear_specular.tga");
+
+	glm::mat4 model, view, proj;
+
+	model = glm::translate(glm::vec3(0, -2, 0));
+	view = glm::lookAt(glm::vec3(0, 0, -4), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	proj = glm::perspective(45.f, 1280.f / 720, 1.f, 100.f);
+
+	while (context.step())
 	{
-		draw(gallery.getShader("BASIC"), gallery.getObject("SPHERE"));
+		tdraw(simple, spear, screen, model, view, proj,
+			spear_diffuse, spear_normal, spear_specular);
 	}
 
-	gallery.term();
-	window.term();
-	return 0;
+	context.term();
 }

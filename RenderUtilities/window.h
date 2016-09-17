@@ -7,10 +7,10 @@ private:
 	char title[64];
 	bool isInit = false; //Optional, could set winHandle ptr to Null and just check for Null
 
+public:
 	//Forward Declaration, should be used when declaring pointers
 	struct GLFWwindow *winHandle = nullptr;
 
-public:
 	// Could add functions to check isInit, Width/Height of Screen, Title etc.
 
 	//Use bools so that we know if the window Initializes, Updates, and Terminates properly

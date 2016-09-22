@@ -14,8 +14,36 @@
 
 std::string fileToString(const char *filePath)
 {
+	/*String Method*/
 	std::ifstream shaderFile{ filePath };
 	std::string shaderContents{ std::istreambuf_iterator<char>(shaderFile), std::istreambuf_iterator<char>() };
+
+	/*C++ ifstream method*/
+	//unsigned fileSize = 0;
+
+	//std::ifstream shaderFile(filePath, std::ios::binary | std::ios::ate);
+
+	//fileSize = shaderFile.tellg();
+
+	//char *shaderContents = (char*)(malloc((fileSize + 1) * sizeof(char)));
+
+	//shaderFile.seekg(0, shaderFile.beg);
+	//shaderFile.read(shaderContents, fileSize);
+	
+	/*C style FILE method*/
+	//FILE *shaderFile;
+	//fopen_s(&shaderFile, filePath, "rb");
+
+	//fseek(shaderFile, 0, SEEK_END);
+	//fileSize = ftell(shaderFile);
+	//fseek(shaderFile, 0, SEEK_SET);
+
+	//char *shaderContents = (char*)(malloc((fileSize + 1) * sizeof(char)));
+
+	//fread(shaderContents, fileSize, 1, shaderFile);
+
+	//fclose(shaderFile);
+
 	return shaderContents;
 }
 
@@ -27,7 +55,15 @@ Shader loadShader(const char * vpath, const char * fpath)
 	std::string vsource = fileToString(vpath);
 	std::string fsource = fileToString(fpath);
 
+	//char* vsource = fileToString(vpath);
+	//char* fsource = fileToString(fpath);
+
 	return makeShader(vsource.c_str(), fsource.c_str());
+
+	//Shader retShader = makeShader(vsource, fsource);
+	//delete[] vsource;
+	//delete[] fsource;
+	//return retShader;
 }
 
 #define TINYOBJLOADER_IMPLEMENTATION // define this in only *one* .cc

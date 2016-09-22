@@ -10,11 +10,9 @@ int main()
 
 	Framebuffer screen = { 0,1280,720 };
 
-	Geometry quad = makeGeometry(quad_verts, 4,
-		quad_tris, 6);
+	Geometry quad = makeGeometry(quad_verts, 4, quad_tris, 6);
 
-	Shader simple = loadShader("../res/shaders/simple.vert",
-		"../res/shaders/simple.frag");
+	Shader simple = loadShader("../res/shaders/simple.vert", "../res/shaders/simple.frag");
 
 	Geometry spear = loadOBJ("../res/models/soulspear.obj");
 
@@ -30,8 +28,7 @@ int main()
 
 	while (context.step())
 	{
-		tdraw(simple, spear, screen, model, view, proj,
-			spear_diffuse, spear_normal, spear_specular);
+		tdraw(simple, spear, screen, model, view, proj, spear_diffuse, spear_normal, spear_specular);
 	}
 
 	context.term();

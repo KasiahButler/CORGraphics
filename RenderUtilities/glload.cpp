@@ -12,58 +12,45 @@
 #include "crenderutils.h"
 #include "vertex.h"
 
-std::string fileToString(const char *filePath)
+char* fileToString(const char *filePath)
 {
-	/*String Method*/
-	std::ifstream shaderFile{ filePath };
-	std::string shaderContents{ std::istreambuf_iterator<char>(shaderFile), std::istreambuf_iterator<char>() };
+	unsigned fileSize = 0;
 
-	/*C++ ifstream method*/
-	//unsigned fileSize = 0;
+	std::ifstream shaderFile(filePath, std::ios::in);
 
-	//std::ifstream shaderFile(filePath, std::ios::binary | std::ios::ate);
+	shaderFile.seekg(0, std::ios::end);
+	fileSize = shaderFile.tellg();
+	shaderFile.seekg(0, std::ios::beg);
 
-	//fileSize = shaderFile.tellg();
+	char *shaderContents = (char*)(malloc((fileSize + 1) * sizeof(char)));
+	shaderContents[fileSize] = 0;
 
-	//char *shaderContents = (char*)(malloc((fileSize + 1) * sizeof(char)));
+	unsigned int i = 0;
+	while (shaderFile.good())
+	{
+		shaderContents[i] = shaderFile.get();
+		if (!shaderFile.eof())
+		{
+			++i;
+		}
+	}
 
-	//shaderFile.seekg(0, shaderFile.beg);
-	//shaderFile.read(shaderContents, fileSize);
-	
-	/*C style FILE method*/
-	//FILE *shaderFile;
-	//fopen_s(&shaderFile, filePath, "rb");
+	shaderContents[i] = 0;
 
-	//fseek(shaderFile, 0, SEEK_END);
-	//fileSize = ftell(shaderFile);
-	//fseek(shaderFile, 0, SEEK_SET);
-
-	//char *shaderContents = (char*)(malloc((fileSize + 1) * sizeof(char)));
-
-	//fread(shaderContents, fileSize, 1, shaderFile);
-
-	//fclose(shaderFile);
+	shaderFile.close();
 
 	return shaderContents;
 }
 
-Shader loadShader(const char * vpath, const char * fpath)
+Shader loadShader(const char * vpath, const char * fpath, bool depth, bool add, bool face)
 {
 	glog("Loading Shader", vpath);
 	glog("Loading Shader", fpath);
 
-	std::string vsource = fileToString(vpath);
-	std::string fsource = fileToString(fpath);
+	char* vsource = fileToString(vpath);
+	char* fsource = fileToString(fpath);
 
-	//char* vsource = fileToString(vpath);
-	//char* fsource = fileToString(fpath);
-
-	return makeShader(vsource.c_str(), fsource.c_str());
-
-	//Shader retShader = makeShader(vsource, fsource);
-	//delete[] vsource;
-	//delete[] fsource;
-	//return retShader;
+	return makeShader(vsource, fsource, depth, add, face);
 }
 
 #define TINYOBJLOADER_IMPLEMENTATION // define this in only *one* .cc
@@ -132,18 +119,6 @@ Texture loadTexture(const char * path)
 	p = stbi_load(path, &w, &h, &f, STBI_default);
 
 	if (!p) return retval;
-
-	switch (f)
-	{
-	case STBI_grey: f = GL_RED;
-		break;
-	case STBI_grey_alpha: f = GL_RG;
-		break;
-	case STBI_rgb: f = GL_RGB;
-		break;
-	case STBI_rgb_alpha: f = GL_RGBA;
-		break;
-	}
 
 	retval = makeTexture(w, h, f, p);
 	stbi_image_free(p);

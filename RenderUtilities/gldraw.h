@@ -16,7 +16,7 @@ namespace tdraw_internal
 	size_t tdraw_format(size_t idx, size_t tex, const Texture &val);
 
 	size_t tdraw_format(size_t idx, size_t tex, const glm::vec3 &val);
-	size_t tdraw_format(size_t idx, size_t tex, const glm::mat3 &val);
+	size_t tdraw_format(size_t idx, size_t tex, const glm::vec4 & val);
 	size_t tdraw_format(size_t idx, size_t tex, const glm::mat4 &val);
 
 	template<typename T, typename ...U>
@@ -29,7 +29,7 @@ namespace tdraw_internal
 	template<typename T>
 	void tdraw_unpack(size_t idx, size_t tex, T val)
 	{
-		tex += tdraw_format(idx, tex, val);
+		tdraw_format(idx, tex, val);
 	}
 }
 

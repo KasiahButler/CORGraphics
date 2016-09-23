@@ -30,12 +30,10 @@ bool Window::init(int a_width, int a_height, char *a_title)
 	winHandle = glfwCreateWindow(width, height, title, nullptr, nullptr);
 
 	glfwMakeContextCurrent(winHandle);
-
 	isInit = true;
 
-	glewExperimental = true;
 	glewInit();
-	glClearColor(0.2f, 1.0f, 0.5f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 #ifdef _DEBUG
 

@@ -24,9 +24,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="window.cpp">
-      <Filter>Source Files\Unclean</Filter>
-    </ClCompile>
     <ClCompile Include="glmake.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -34,6 +31,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gldraw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,6 +68,30 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="..\res\shaders\simple.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\gpass.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\gpass.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\lpass.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\lpass.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\blur.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\blur.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\quad.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\quad.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

@@ -6,30 +6,81 @@
 int main()
 {
 	Window context;
-	context.init(1280, 720);
-
-	Framebuffer screen = { 0,1280,720 };
+	context.init(1280, 720, "This be a Window");
 
 	Geometry quad = makeGeometry(quad_verts, 4, quad_tris, 6);
-
-	Shader simple = loadShader("../res/shaders/simple.vert", "../res/shaders/simple.frag");
-
 	Geometry spear = loadOBJ("../res/models/soulspear.obj");
+	Geometry cube = loadOBJ("../res/models/sphere.obj");
 
 	Texture spear_normal = loadTexture("../res/textures/soulspear_normal.tga");
 	Texture spear_diffuse = loadTexture("../res/textures/soulspear_diffuse.tga");
 	Texture spear_specular = loadTexture("../res/textures/soulspear_specular.tga");
 
+	const unsigned char norm_pixels[4] = { 127, 127, 255, 255 };
+	Texture vertex_normals = makeTexture(1, 1, 4, norm_pixels);
+
+	const unsigned char white_pixels[4] = { 255, 255, 255, 255 };
+	Texture white = makeTexture(1, 1, 4, white_pixels);
+
+	Shader gpass = loadShader("../res/shaders/gpass.vert", "../res/shaders/gpass.frag");
+	Shader lpass = loadShader("../res/shaders/lpass.vert", "../res/shaders/lpass.frag", false, true);
+	Shader post = loadShader("../res/shaders/quad.vert", "../res/shaders/quad.frag", false);
+	Shader blur = loadShader("../res/shaders/blur.vert", "../res/shaders/blur.frag", false);
+
+	Framebuffer screen = { 0, 1280, 720 };
+	Framebuffer gframe = makeFramebuffer(1280, 720, 4);
+	Framebuffer lframe = makeFramebuffer(1280, 720, 3);
+	Framebuffer nframe = makeFramebuffer(1280, 720, 1);
+
 	glm::mat4 model, view, proj;
 
-	model = glm::translate(glm::vec3(0, -2, 0));
-	view = glm::lookAt(glm::vec3(0, 0, -4), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-	proj = glm::perspective(45.f, 1280.f / 720, 1.f, 100.f);
+	model = glm::translate(glm::vec3(0, -1, 0));
+	view = glm::lookAt(glm::vec3(0, 0, 4), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	proj = glm::perspective(45.f, 1280.f / 720.f, 1.f, 100.f);
+
+	float time = 0;
 
 	while (context.step())
 	{
-		tdraw(simple, spear, screen, model, view, proj, spear_diffuse, spear_normal, spear_specular);
-	}
+		time += 0.016f;
+		clearFrameBuffer(gframe);
+		clearFrameBuffer(lframe);
+		clearFrameBuffer(nframe);
 
+		model = glm::rotate(time, glm::vec3(0, 1, 0)) * glm::translate(glm::vec3(0, -1, 0));
+
+		//Draws the Geometry and applies Textures
+		tdraw(gpass, spear, gframe, model, view, proj, spear_diffuse, spear_normal, spear_specular);
+
+		tdraw(gpass, cube, gframe, model, view, proj, white, vertex_normals, white);
+	
+		tdraw(gpass, quad, gframe, glm::rotate(45.f, glm::vec3(0, -1, 0)) * glm::translate(glm::vec3(0, 0, -2)) * glm::scale(glm::vec3(2, 2, 1)), view, proj, white, vertex_normals, white);
+
+		tdraw(blur, quad, nframe, gframe.colors[1]);
+
+		//Applies Lighting to the world
+		tdraw(lpass, quad, lframe, view, proj, gframe.colors[0], gframe.colors[1], gframe.colors[2], gframe.colors[3], gframe.depth, glm::normalize(glm::vec4(1, -1, -1, 0)), glm::vec4(1, 0, 0, 1));
+		tdraw(lpass, quad, lframe, view, proj, gframe.colors[0], gframe.colors[1], gframe.colors[2], gframe.colors[3], gframe.depth, glm::normalize(glm::vec4(1, 1, -1, 0)), glm::vec4(0, 1, 0, 1));
+		tdraw(lpass, quad, lframe, view, proj, gframe.colors[0], gframe.colors[1], gframe.colors[2], gframe.colors[3], gframe.depth, glm::normalize(glm::vec4(-1, -1, 1, 0)), glm::vec4(0, 0, 1, 1));
+
+		//Debug Rendering
+		for (int i = 0; i < 4; ++i)
+		{
+			glm::mat4 mod = glm::translate(glm::vec3(-.75f + .5*i, 0.75f, 0)) * glm::scale(glm::vec3(0.25f, 0.25f, 1.f));
+			tdraw(post, quad, screen, gframe.colors[i], mod);
+		}
+
+		glm::mat4 mod = glm::translate(glm::vec3(-.75f, 0.25f, 0)) * glm::scale(glm::vec3(0.25f, 0.25f, 1.f));
+		tdraw(post, quad, screen, gframe.depth, mod);
+
+		mod = glm::translate(glm::vec3(-.25f, 0.25f, 0)) * glm::scale(glm::vec3(0.25f, 0.25f, 1.f)); 
+		tdraw(post, quad, screen, lframe.colors[0], mod);
+
+		mod = glm::translate(glm::vec3(.25f, 0.25f, 0)) * glm::scale(glm::vec3(0.25f, 0.25f, 1.f));
+		tdraw(post, quad, screen, lframe.colors[1], mod);
+
+		mod = glm::translate(glm::vec3(.75f, .25f, 0)) * glm::scale(glm::vec3(.25f, .25f, 1.f));
+		tdraw(post, quad, screen, lframe.colors[2], mod);
+	}
 	context.term();
 }

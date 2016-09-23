@@ -146,6 +146,14 @@
     <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\res\shaders\blur.frag" />
+    <None Include="..\res\shaders\blur.vert" />
+    <None Include="..\res\shaders\gpass.frag" />
+    <None Include="..\res\shaders\gpass.vert" />
+    <None Include="..\res\shaders\lpass.frag" />
+    <None Include="..\res\shaders\lpass.vert" />
+    <None Include="..\res\shaders\quad.frag" />
+    <None Include="..\res\shaders\quad.vert" />
     <None Include="..\res\shaders\simple.frag" />
     <None Include="..\res\shaders\simple.vert" />
   </ItemGroup>

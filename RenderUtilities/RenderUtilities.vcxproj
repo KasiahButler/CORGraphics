@@ -152,10 +152,14 @@
     <None Include="..\res\shaders\gpass.vert" />
     <None Include="..\res\shaders\lpass.frag" />
     <None Include="..\res\shaders\lpass.vert" />
+    <None Include="..\res\shaders\lspass.frag" />
+    <None Include="..\res\shaders\lspass.vert" />
     <None Include="..\res\shaders\quad.frag" />
     <None Include="..\res\shaders\quad.vert" />
     <None Include="..\res\shaders\simple.frag" />
     <None Include="..\res\shaders\simple.vert" />
+    <None Include="..\res\shaders\spass.frag" />
+    <None Include="..\res\shaders\spass.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

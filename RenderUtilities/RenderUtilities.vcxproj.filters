@@ -94,5 +94,17 @@
     <None Include="..\res\shaders\quad.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\res\shaders\spass.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\spass.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\lspass.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\lspass.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -160,6 +160,8 @@
     <None Include="..\res\shaders\simple.vert" />
     <None Include="..\res\shaders\spass.frag" />
     <None Include="..\res\shaders\spass.vert" />
+    <None Include="celGeo.frag" />
+    <None Include="celGeo.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

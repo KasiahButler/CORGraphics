@@ -106,5 +106,11 @@
     <None Include="..\res\shaders\lspass.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="celGeo.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="celGeo.frag">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

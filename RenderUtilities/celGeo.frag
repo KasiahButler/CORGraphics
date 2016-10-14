@@ -1,8 +1,8 @@
-#version 430
+#version 330
 
-in vec3 vPosition;
-in vec3 vNormal;
-in vec2 vUV;
+in vec3 gPosition;
+in vec3 gNormal;
+in vec2 gUV;
 
 layout(location = 3) uniform sampler2D diffuseMap;
 layout(location = 4) uniform sampler2D normalMap;
@@ -17,13 +17,13 @@ layout(location = 3) out vec4 position;
 
 void main()
 {
-	mat3 TBN = cotangent_frame(vNormal, vPosition, vUV);
-	vec3 N = TBN * (texture(normalMap, vUV).xyz * 2 - 1);
+	mat3 TBN = cotangent_frame(gNormal, gPosition, gUV);
+	vec3 N = TBN * (texture(normalMap, gUV).xyz * 2 - 1);
 
-	albedo   = texture(diffuseMap, vUV);
+	albedo   = texture(diffuseMap, gUV);
 	normal   = vec4(N,0);
-	specular = texture(specularMap, vUV);
-	position = vec4(vPosition,1);
+	specular = texture(specularMap, gUV);
+	position = vec4(gPosition,1);
 }
 
 mat3 cotangent_frame( in vec3 N, in vec3 p, in vec2 uv )

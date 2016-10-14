@@ -11,12 +11,12 @@ Geometry makeGeometry(const Vertex *verts, size_t vsize, const unsigned int *tri
 	Geometry retVal;
 	retVal.size = tsize;
 
-	//Define all the Variables
+	//Define all the Buffers and give them a "name" (GLuint)
 	glGenBuffers(1, &retVal.vbo);
 	glGenBuffers(1, &retVal.ibo);
 	glGenVertexArrays(1, &retVal.vao);
 
-	//Scope all the variables
+	//Bind the buffers we generated
 	glBindVertexArray(retVal.vao);
 	glBindBuffer(GL_ARRAY_BUFFER, retVal.vbo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, retVal.ibo);

@@ -106,10 +106,16 @@
     <None Include="..\res\shaders\lspass.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="celGeo.vert">
+    <None Include="SSAO.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="celGeo.frag">
+    <None Include="SSAO.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\ripple.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\ripple.frag">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

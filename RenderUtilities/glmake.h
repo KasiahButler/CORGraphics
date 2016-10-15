@@ -16,3 +16,5 @@ void freeTexture(Texture &);
 
 struct Framebuffer makeFramebuffer(unsigned width, unsigned height, unsigned nColors, bool *isFloat = nullptr, int *channels = nullptr);
 void freeFramebuffer(Framebuffer &);
+
+Geometry genGrid(unsigned sqr, float dim);

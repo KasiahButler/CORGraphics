@@ -156,12 +156,14 @@
     <None Include="..\res\shaders\lspass.vert" />
     <None Include="..\res\shaders\quad.frag" />
     <None Include="..\res\shaders\quad.vert" />
+    <None Include="..\res\shaders\ripple.frag" />
+    <None Include="..\res\shaders\ripple.vert" />
     <None Include="..\res\shaders\simple.frag" />
     <None Include="..\res\shaders\simple.vert" />
     <None Include="..\res\shaders\spass.frag" />
     <None Include="..\res\shaders\spass.vert" />
-    <None Include="celGeo.frag" />
-    <None Include="celGeo.vert" />
+    <None Include="SSAO.frag" />
+    <None Include="SSAO.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

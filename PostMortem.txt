@@ -1,0 +1,6 @@
+# CORGraphics
+Basic Graphics Library for AIE 2016
+
+Post Mortem for AIE Graphics Assessment
+
+  Overall I feel I accomplished most of my goals in this assessment adequately and am far more confident while coding with the OpenGL API and creating effects using GLSL shaders. I was able to meet most of the requirements of the assessment within the timeframe given though I did miss one of the requirements in the final project. My biggest triumph in this project was the ripple shader that I created as it was one of the trickier bits I worked on. I'm also rather proud of my knowledge in OpenGL and feel like I've learned quite a bit in the relatively short span of time I was working with it. The challenges I met with were mostly self inflicted though managing data between multiple shaders did tie me up for a little while but I was able to get it down by the end. If I were to start this project over again I would've prevented myself from spending so much time studying OpenGL itself and learning how to create my own tools in it and would have allotted more time to creating my actual Shaders.

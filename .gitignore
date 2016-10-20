@@ -246,10 +246,6 @@ ModelManifest.xml
 
 *.meta
 
-
-*.obj
-
-
 !res/**/*.obj
 
 

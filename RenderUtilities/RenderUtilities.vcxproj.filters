@@ -13,15 +13,110 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Unclean">
+      <UniqueIdentifier>{cd09cbfe-5bda-4170-8cf2-3668ce592fba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Unclean">
+      <UniqueIdentifier>{e0ecf81b-630a-474d-b229-51efe8f33dbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{a4e39e6c-4393-4c4f-adca-fb2b4132f880}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="crenderutils.cpp">
+    <ClCompile Include="glmake.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glload.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gldraw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="gldecs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="globjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glmake.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gldraw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="crenderutils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\shaders\simple.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\simple.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\gpass.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\gpass.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\lpass.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\lpass.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\blur.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\blur.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\quad.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\quad.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\spass.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\spass.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\lspass.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\lspass.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="SSAO.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="SSAO.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\ripple.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\res\shaders\ripple.frag">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
